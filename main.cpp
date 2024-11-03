@@ -33,10 +33,18 @@ public:
       cout << endl;
     }
   }
-/*
-  // 3. Add two matrices (operator overloading for +)
-  Matrix operator+(const Matrix& other) const;
 
+  // 3. Add two matrices (operator overloading for +)
+  Matrix operator+(const Matrix& other) const {
+    Matrix result;
+    for (int i=0; i < SIZE; i++) {
+      for (int j=0; j < SIZE; j++) {
+        result.data[i][j] = data[i][j] + other.data[i][j];
+      }
+    }
+    return result;
+  }
+/*
   // 4. Multiply two matrices (operator overloading for *)
   Matrix operator*(const Matrix& other) const;
 
@@ -60,11 +68,11 @@ int main() {
   mat2.readFromStdin();
   cout << "Matrix 2:" << endl;
   mat2.display();
-/*
+
   Matrix sum = mat1 + mat2;
   cout << "Sum of matrices:" << endl;
   sum.display();
-
+/*
   Matrix product = mat1 * mat2;
   cout << "Product of matrices:" << endl;
   product.display();
