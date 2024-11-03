@@ -1,5 +1,6 @@
-
 #include <iostream>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -11,11 +12,28 @@ private:
 
 public:
   // 1. Read values from stdin into a matrix
-  void readFromStdin();
-
+  void readFromStdin() {
+    cout << "Paste entire matrix (4x4) here:" << endl;
+    string line;
+    for (int i=0; i < SIZE; i++) {
+      getline(cin, line);
+      istringstream stream(line);
+      for (int j=0; j < SIZE; j++) {
+        stream >> data[i][j];
+      }
+    }
+  }
+  
   // 2. Display a matrix
-  void display() const;
-
+  void display() const {
+    for (int i=0; i < SIZE; i++) {
+      for (int j=0; j < SIZE; j++) {
+        cout << data[i][j] << " ";
+      }
+      cout << endl;
+    }
+  }
+/*
   // 3. Add two matrices (operator overloading for +)
   Matrix operator+(const Matrix& other) const;
 
@@ -26,7 +44,7 @@ public:
   int sumOfDiagonals() const;
 
   // 6. Swap matrix rows
-  void swapRows(int row1, int row2);
+  void swapRows(int row1, int row2);*/
 };
 
 int main() {
@@ -42,7 +60,7 @@ int main() {
   mat2.readFromStdin();
   cout << "Matrix 2:" << endl;
   mat2.display();
-
+/*
   Matrix sum = mat1 + mat2;
   cout << "Sum of matrices:" << endl;
   sum.display();
@@ -55,7 +73,7 @@ int main() {
 
   mat1.swapRows(0, 2);
   cout << "Matrix 1 after swapping rows:" << endl;
-  mat1.display();
+  mat1.display();*/
 
   return 0;
 }
