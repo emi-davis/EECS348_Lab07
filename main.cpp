@@ -12,12 +12,12 @@ private:
 
 public:
   // 1. Read values from stdin into a matrix
-  void readFromStdin() {
+  void readFromStdin() { // allows user to paste entire matrix instead of one index at a time
     cout << "Paste entire matrix (4x4) here:" << endl;
     string line;
     for (int i=0; i < SIZE; i++) {
-      getline(cin, line);
-      istringstream stream(line);
+      getline(cin, line); // read whole line
+      istringstream stream(line); 
       for (int j=0; j < SIZE; j++) {
         stream >> data[i][j];
       }
@@ -39,7 +39,7 @@ public:
     Matrix result;
     for (int i=0; i < SIZE; i++) {
       for (int j=0; j < SIZE; j++) {
-        result.data[i][j] = data[i][j] + other.data[i][j];
+        result.data[i][j] = data[i][j] + other.data[i][j]; // add each index
       }
     }
     return result;
@@ -50,9 +50,9 @@ public:
     Matrix result;
     for (int i=0; i < SIZE; i++) {
       for (int j=0; j < SIZE; j++) {
-        result.data[i][j] = 0;
+        result.data[i][j] = 0; // reset
         for (int k=0; k < SIZE; k++) {
-          result.data[i][j] += data[i][k] * other.data[k][j];
+          result.data[i][j] += data[i][k] * other.data[k][j]; // multi and sum
         }
       }
     }
@@ -63,14 +63,24 @@ public:
   int sumOfDiagonals() const {
     int sum = 0;
     for (int i=0; i < SIZE; i++) {
-      sum += data[i][i];
-      sum += data[i][SIZE-1-i];
+      sum += data[i][i]; // top left to bottom right
+      sum += data[i][SIZE-1-i]; // top right to bottom left
     }
     return sum;
   }
-/*
+
   // 6. Swap matrix rows
-  void swapRows(int row1, int row2);*/
+  void swapRows(int row1, int row2) {
+    if (row1 < 0 || row2 < 0 || row1 >= SIZE || row2 >= SIZE) {
+      cout << "Error: row indexes not valid." << endl;
+      return;
+    }
+    for (int i=0; i < SIZE; i++) {
+      int temp = data[row1][i]; // hold row temp
+      data[row1][i] = data[row2][i]; // replace
+      data[row2][i] = temp; // put back temp
+    }
+  }
 };
 
 int main() {
@@ -96,11 +106,10 @@ int main() {
   product.display();
 
   cout << "Sum of diagonals of Matrix 1: " << mat1.sumOfDiagonals() << endl;
-  cout << "Sum of diagonals of Matrix 2: " << mat2.sumOfDiagonals() << endl;
-/*
+
   mat1.swapRows(0, 2);
   cout << "Matrix 1 after swapping rows:" << endl;
-  mat1.display();*/
+  mat1.display();
 
   return 0;
 }
