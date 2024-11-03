@@ -44,10 +44,21 @@ public:
     }
     return result;
   }
-/*
-  // 4. Multiply two matrices (operator overloading for *)
-  Matrix operator*(const Matrix& other) const;
 
+  // 4. Multiply two matrices (operator overloading for *)
+  Matrix operator*(const Matrix& other) const {
+    Matrix result;
+    for (int i=0; i < SIZE; i++) {
+      for (int j=0; j < SIZE; j++) {
+        result.data[i][j] = 0;
+        for (int k=0; k < SIZE; k++) {
+          result.data[i][j] += data[i][k] * other.data[k][j];
+        }
+      }
+    }
+    return result;
+  }
+/*
   // 5. Compute the sum of matrix diagonal elements
   int sumOfDiagonals() const;
 
@@ -72,11 +83,11 @@ int main() {
   Matrix sum = mat1 + mat2;
   cout << "Sum of matrices:" << endl;
   sum.display();
-/*
+
   Matrix product = mat1 * mat2;
   cout << "Product of matrices:" << endl;
   product.display();
-
+/*
   cout << "Sum of diagonals of Matrix 1: " << mat1.sumOfDiagonals() << endl;
 
   mat1.swapRows(0, 2);
