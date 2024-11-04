@@ -1,6 +1,7 @@
 #include <iostream>
-#include <sstream>
+#include <fstream>
 #include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -12,14 +13,10 @@ private:
 
 public:
   // 1. Read values from stdin into a matrix
-  void readFromStdin() { // allows user to paste entire matrix instead of one index at a time
-    cout << "Paste entire matrix (4x4) here:" << endl;
-    string line;
+  void readFromStdin(ifstream& file) {
     for (int i=0; i < SIZE; i++) {
-      getline(cin, line); // read whole line
-      istringstream stream(line); 
-      for (int j=0; j < SIZE; j++) {
-        stream >> data[i][j];
+      for (int j = 0; j < SIZE; j++) {
+        file >> data[i][j];
       }
     }
   }
@@ -84,18 +81,28 @@ public:
 };
 
 int main() {
+  string filename;
+  cout << "Enter input file name: ";
+  getline(cin, filename);
+  ifstream file(filename); // open file
+  if (!file.is_open()) {
+    cerr << "Failed to open file: " << filename << endl;
+    exit(1);
+  }
   // Example usage:
   Matrix mat1;
   cout << "Enter values for Matrix 1:" << endl;
-  mat1.readFromStdin();
+  mat1.readFromStdin(file);
   cout << "Matrix 1:" << endl;
   mat1.display();
 
   Matrix mat2;
   cout << "Enter values for Matrix 2:" << endl;
-  mat2.readFromStdin();
+  mat2.readFromStdin(file);
   cout << "Matrix 2:" << endl;
   mat2.display();
+
+  file.close(); // close file
 
   Matrix sum = mat1 + mat2;
   cout << "Sum of matrices:" << endl;
